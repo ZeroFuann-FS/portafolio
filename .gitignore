@@ -6,3 +6,6 @@ dist
 fotos/
 bocetos/
 .vercel
+
+.vercel
+.env*
