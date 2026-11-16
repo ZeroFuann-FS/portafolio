@@ -1,0 +1,2 @@
+-- La migración real vive en el repo de Brío: supabase/migrations/20261118000000_portafolio.sql
+-- (tablas portafolio_comentarios y portafolio_mensajes, aplicadas el 2026-11-16).

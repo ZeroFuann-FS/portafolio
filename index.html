@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZeroFuann · Jose Juan Juarez</title>
+    <meta name="description" content="Jose Juan Juarez (ZeroFuann): desarrollador full stack enfocado en productos con IA. Escucho el problema, construyo la solución y la llevo a producción." />
+    <meta property="og:title" content="ZeroFuann · Jose Juan Juarez" />
+    <meta property="og:description" content="Desarrollador full stack enfocado en productos con IA. Camino a Forward Deployed Engineer." />
+    <meta property="og:image" content="/og.png" />
+    <meta name="theme-color" content="#0b0a10" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet" />
+    <script>
+      // Tema antes de pintar (evita parpadeo)
+      try {
+        var t = localStorage.getItem("zf:tema");
+        if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "claro" : "oscuro";
+        document.documentElement.dataset.tema = t;
+      } catch (e) { document.documentElement.dataset.tema = "oscuro"; }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
