@@ -32,7 +32,8 @@ export async function enviarComentario(c: { nombre: string; rol?: string; mensaj
 export async function enviarCorreo(datos: Record<string, string>, asunto: string) {
   const r = await fetch(`https://formsubmit.co/ajax/${PERFIL.correo}`, {
     method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({ ...datos, _subject: asunto, _template: "table", _captcha: "false" }),
+    // _honey: campo trampa que FormSubmit revisa en su servidor (los bots que mandan directo lo llenan y se descartan)
+    body: JSON.stringify({ ...datos, _subject: asunto, _template: "table", _captcha: "false", _honey: "" }),
   });
   const j = await r.json().catch(() => ({}));
   if (!r.ok || j.success === "false") throw new Error("No se pudo enviar");

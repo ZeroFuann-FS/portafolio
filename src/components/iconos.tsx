@@ -30,3 +30,18 @@ export const IcoEnviar = ({ className, size = 18 }: P) => (
     <path d="M22 2 11 13M22 2l-7 20-4-9-9-4z" />
   </svg>
 );
+
+/* Íconos de interfaz: mismo trazo (1.8), mismas puntas redondas, alineados al texto. */
+const Trazo = ({ className, size = 16, d }: P & { d: string }) => (
+  <svg className={`inline-block shrink-0 ${className ?? ""}`} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d={d} />
+  </svg>
+);
+export const IcoFlecha = (p: P) => <Trazo {...p} d="M5 12h14M13 6l6 6-6 6" />;
+export const IcoExterno = (p: P) => <Trazo {...p} d="M7 17 17 7M8 7h9v9" />;
+export const IcoDescargar = (p: P) => <Trazo {...p} d="M12 4v12M6 10l6 6 6-6M5 20h14" />;
+export const IcoArriba = (p: P) => <Trazo {...p} d="M12 20V6M6 12l6-6 6 6" />;
+export const IcoPalomita = (p: P) => <Trazo {...p} d="m5 12.5 4.5 4.5L19 7.5" />;
+export const IcoRepetir = (p: P) => <Trazo {...p} d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4.5h-4.5" />;
+export const IcoMas = (p: P) => <Trazo {...p} d="M12 5v14M5 12h14" />;
+export const IcoCopiar = (p: P) => <Trazo {...p} d="M9 9h10v10H9zM5 15V5h10" />;

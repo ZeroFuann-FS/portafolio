@@ -28,9 +28,9 @@ export const TEXTOS = {
   },
   hero: {
     estado: { es: "Residente en Synesia Labs · abierto a oportunidades", en: "Resident at Synesia Labs · open to opportunities" },
-    linea1: { es: "Escucho el problema.", en: "I listen to the problem." },
-    linea2: { es: "Construyo la solución.", en: "I build the solution." },
-    linea3: { es: "La llevo a producción.", en: "I ship it to production." },
+    linea1: { es: "Escucho el problema,", en: "I listen to the problem," },
+    linea2: { es: "lo construyo con IA", en: "build it with AI" },
+    linea3: { es: "y lo llevo a producción.", en: "and ship it to production." },
     bajada: {
       es: "Así trabajo con quienes usan lo que hago: me escriben, entiendo qué pasa y lo resuelvo. Rápido, de punta a punta y con el código bajo control.",
       en: "That's how I work with the people who use what I build: they write to me, I figure out what's wrong and I fix it. Fast, end to end, with the code under control.",

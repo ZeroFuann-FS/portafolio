@@ -4,6 +4,10 @@ import { AnimatePresence, LayoutGroup, motion } from "motion/react";
 import { PROYECTOS, STACK, TEXTOS, type CategoriaStack, type Tecnologia } from "../data/contenido";
 import { useEstado, useT } from "../lib/estado";
 import { Encabezado, Revelar } from "./efectos";
+import { IcoFlecha } from "./iconos";
+
+/** En celular se ven las primeras; el resto con "Ver todas". */
+const EN_CELULAR = 12;
 
 const CATEGORIAS: { id: "todo" | CategoriaStack; t: Record<"es" | "en", string> }[] = [
   { id: "todo", t: { es: "Todo", en: "All" } },
@@ -50,6 +54,7 @@ export default function Stack() {
   const { idioma } = useEstado();
   const [cat, setCat] = useState<"todo" | CategoriaStack>("todo");
   const [sel, setSel] = useState<Tecnologia>(STACK.find((s) => s.id === "react")!);
+  const [todas, setTodas] = useState(false);
   const lista = STACK.filter((s) => cat === "todo" || s.cat === cat);
   const usados = proyectosDe(sel);
 
@@ -62,9 +67,9 @@ export default function Stack() {
           {CATEGORIAS.map((c) => {
             const n = c.id === "todo" ? STACK.length : STACK.filter((s) => s.cat === c.id).length;
             return (
-              <button key={c.id} onClick={() => setCat(c.id)} className="relative rounded-full px-4 py-2 font-mono text-sm">
+              <button key={c.id} onClick={() => setCat(c.id)} aria-pressed={cat === c.id} className="relative rounded-full px-4 py-2 text-sm font-medium">
                 {cat === c.id && <motion.span layoutId="pestana" className="absolute inset-0 rounded-full bg-ac-fuerte" transition={{ type: "spring", stiffness: 380, damping: 32 }} />}
-                <span className={`relative ${cat === c.id ? "text-white" : "text-suave hover:text-tx"}`}>{c.t[idioma]} <span className="opacity-60">{n}</span></span>
+                <span className={`relative ${cat === c.id ? "text-white" : "text-suave hover:text-tx"}`}>{c.t[idioma]} <span className="num opacity-60">{n}</span></span>
               </button>
             );
           })}
@@ -76,23 +81,29 @@ export default function Stack() {
           <AnimatePresence mode="popLayout">
             {lista.map((s, i) => {
               const on = sel.id === s.id;
+              const escondida = !todas && i >= EN_CELULAR;
               return (
                 <motion.button layout key={s.id} onClick={() => setSel(s)} onMouseEnter={() => setSel(s)}
                   initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.85 }} transition={{ duration: 0.3, delay: Math.min(i, 12) * 0.02 }}
-                  className={`group relative flex aspect-square flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl border bg-tarjeta transition-colors ${on ? "border-ac" : "border-borde hover:border-ac/60"}`}>
-                  {on && <motion.span layoutId="brillo-stack" className="absolute inset-0" style={{ background: "radial-gradient(circle at 50% 40%, var(--brillo), transparent 70%)" }} />}
+                  className={`group relative flex aspect-square flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl border bg-tarjeta transition-colors ${on ? "border-ac" : "border-borde hover:border-ac/60"} ${escondida ? "max-lg:hidden" : ""}`}>
+                  {on && <motion.span layoutId="brillo-stack" className="absolute inset-0 bg-chip" />}
                   <span className="relative transition duration-300 group-hover:-translate-y-1 group-hover:scale-110"><Icono s={s} /></span>
-                  <span className="relative line-clamp-2 px-1.5 text-center font-mono text-[11px] leading-tight text-suave">{s.n}</span>
+                  <span className="relative line-clamp-2 px-1.5 text-center text-xs leading-tight text-suave">{s.n}</span>
                   {s.nivel === 0 && <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-ac" />}
-                  {s.nivel === 3 && <span className="absolute right-2 top-2 rounded-full border border-ac/50 px-1.5 font-mono text-[9px] text-ac">{idioma === "es" ? "estudio" : "learning"}</span>}
+                  {s.nivel === 3 && <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full border border-ac" title={idioma === "es" ? "Estudiándolo" : "Learning"} />}
                 </motion.button>
               );
             })}
           </AnimatePresence>
+          {!todas && lista.length > EN_CELULAR && (
+            <button onClick={() => setTodas(true)} className="col-span-full rounded-2xl border border-dashed border-borde py-3.5 text-sm font-semibold text-suave transition hover:border-ac hover:text-tx active:scale-[0.98] lg:hidden">
+              {idioma === "es" ? `Ver todas (${lista.length})` : `See all (${lista.length})`}
+            </button>
+          )}
         </motion.div>
 
         <Revelar>
-          <div className="sticky top-24 overflow-hidden rounded-[22px] border border-borde bg-tarjeta p-7">
+          <div className="sticky top-24 overflow-hidden rounded-card border border-borde bg-tarjeta p-7">
             <AnimatePresence mode="wait">
               <motion.div key={sel.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
                 <div className="flex items-center gap-4">
@@ -103,17 +114,17 @@ export default function Stack() {
                   </div>
                 </div>
                 <div className="mt-6 h-1.5 overflow-hidden rounded-full bg-linea">
-                  <motion.div className={`h-full rounded-full ${sel.nivel === 3 ? "bg-gradient-to-r from-ac to-transparent" : "bg-ac"}`} initial={{ width: 0 }} animate={{ width: ANCHO[sel.nivel] }} transition={{ duration: 0.8, ease: "easeOut" }} />
+                  <motion.div className={`h-full rounded-full bg-ac ${sel.nivel === 3 ? "opacity-50" : ""}`} initial={{ width: 0 }} animate={{ width: ANCHO[sel.nivel] }} transition={{ duration: 0.8, ease: "easeOut" }} />
                 </div>
-                <p className="mt-6 font-serif text-2xl italic leading-snug">{t(sel.uso)}</p>
+                <p className="mt-6 text-xl leading-snug">{t(sel.uso)}</p>
                 {usados.length > 0 && (
                   <div className="mt-6 flex flex-wrap gap-2">
-                    {usados.map((p) => <a key={p.id} href="#proyectos" className="rounded-full border border-borde px-3 py-1 font-mono text-xs text-suave transition hover:border-ac hover:text-tx">{p.nombre} →</a>)}
+                    {usados.map((p) => <a key={p.id} href="#proyectos" className="group inline-flex items-center gap-1 rounded-full border border-borde px-3 py-1 text-sm text-suave transition hover:border-ac hover:text-tx">{p.nombre} <IcoFlecha size={13} className="transition group-hover:translate-x-0.5" /></a>)}
                   </div>
                 )}
               </motion.div>
             </AnimatePresence>
-            <div className="mt-8 grid grid-cols-2 gap-2 border-t border-linea pt-4 font-mono text-[11px] text-tenue">
+            <div className="mt-8 grid grid-cols-2 gap-2 border-t border-linea pt-4 text-xs text-tenue">
               {NIVEL[idioma].map((l, i) => <span key={l} className="flex items-center gap-2"><span className="h-1.5 rounded-full bg-ac" style={{ width: [18, 14, 9, 6][i], opacity: i === 3 ? 0.5 : 1 }} />{l}</span>)}
             </div>
           </div>

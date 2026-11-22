@@ -3,8 +3,8 @@ import { useEffect, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { PERFIL } from "../data/contenido";
 import { enlaceWhatsApp, enviarMensaje } from "../lib/servicios-externos";
-import { IcoCorreo, IcoEnviar, IcoWhatsApp } from "../components/iconos";
-import { Encabezado, Inclinar, Magnetico, Revelar, TextoDividido, ease } from "../components/efectos";
+import { IcoCopiar, IcoCorreo, IcoEnviar, IcoExterno, IcoFlecha, IcoMas, IcoPalomita, IcoWhatsApp } from "../components/iconos";
+import { Encabezado, Revelar, TextoDividido, ease } from "../components/efectos";
 
 const WA = enlaceWhatsApp("¡Hola Jose Juan! Vi tu página y me gustaría cotizar un proyecto.");
 const campo = "w-full rounded-xl border border-borde bg-bg px-4 py-3.5 text-tx outline-none transition placeholder:text-tenue focus:border-ac";
@@ -67,12 +67,11 @@ function Vitrina() {
   useEffect(() => { const t = setInterval(() => setI((x) => (x + 1) % VITRINA.length), 3200); return () => clearInterval(t); }, []);
   const v = VITRINA[i];
   return (
-    <Inclinar max={5}>
-      <div className="overflow-hidden rounded-2xl border border-borde bg-tarjeta shadow-[0_40px_100px_-30px_var(--ac-fuerte)]">
+      <div className="overflow-hidden rounded-card border border-borde bg-tarjeta">
         <div className="flex items-center gap-3 border-b border-borde px-4 py-3">
           <span className="flex gap-1.5">{[0, 1, 2].map((k) => <span key={k} className="h-2.5 w-2.5 rounded-full bg-borde" />)}</span>
           <AnimatePresence mode="wait">
-            <motion.span key={v.url} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} className="flex-1 truncate rounded-md bg-bg px-3 py-1 font-mono text-xs text-suave">{v.url}</motion.span>
+            <motion.span key={v.url} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} className="flex-1 truncate rounded-md bg-bg px-3 py-1 text-xs text-suave">{v.url}</motion.span>
           </AnimatePresence>
         </div>
         <div className="relative aspect-[16/10] overflow-hidden bg-bg2">
@@ -84,14 +83,13 @@ function Vitrina() {
         <div className="flex items-center justify-between px-5 py-4">
           <AnimatePresence mode="wait">
             <motion.div key={v.n} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 8 }}>
-              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ac">{v.tipo}</p>
+              <p className="lab">{v.tipo}</p>
               <p className="font-display text-lg font-bold">{v.n}</p>
             </motion.div>
           </AnimatePresence>
           <div className="flex gap-1.5">{VITRINA.map((_, k) => <span key={k} className={`h-1.5 rounded-full transition-all ${k === i ? "w-6 bg-ac" : "w-1.5 bg-borde"}`} />)}</div>
         </div>
       </div>
-    </Inclinar>
   );
 }
 
@@ -101,7 +99,7 @@ function Pregunta({ p, r, i }: { p: string; r: string; i: number }) {
     <div className={`rounded-2xl border transition-colors ${a ? "border-ac bg-tarjeta" : "border-borde"}`}>
       <button onClick={() => setA(!a)} aria-expanded={a} className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left">
         <span className="font-display text-lg font-bold">{p}</span>
-        <motion.span animate={{ rotate: a ? 45 : 0 }} className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-borde text-xl text-ac">+</motion.span>
+        <motion.span animate={{ rotate: a ? 45 : 0 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-borde text-ac"><IcoMas size={16} /></motion.span>
       </button>
       <AnimatePresence initial={false}>
         {a && <motion.p initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden px-6 pb-6 text-suave">{r}</motion.p>}
@@ -114,7 +112,7 @@ function CopiarCorreo() {
   const [ok, setOk] = useState(false);
   return (
     <button type="button" onClick={() => navigator.clipboard?.writeText(PERFIL.correo).then(() => { setOk(true); setTimeout(() => setOk(false), 1600); })}
-      className="shrink-0 rounded-lg border border-borde px-3 py-1.5 font-mono text-xs text-suave transition hover:border-ac hover:text-tx">{ok ? "✓ Copiado" : "Copiar"}</button>
+      aria-live="polite" className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-borde px-3 py-1.5 text-xs font-medium text-suave transition hover:border-ac hover:text-tx active:scale-95">{ok ? <><IcoPalomita size={13} className="text-ac" />Copiado</> : <><IcoCopiar size={13} />Copiar</>}</button>
   );
 }
 
@@ -129,12 +127,12 @@ function FormCotizacion() {
     catch { setEstado("error"); }
   };
   if (estado === "ok") return (
-    <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="grid min-h-[380px] place-items-center rounded-[26px] border border-ac bg-tarjeta p-8 text-center">
-      <div><p className="font-serif text-4xl italic text-ac">¡Gracias!</p><p className="mt-3 text-suave">Recibí tu mensaje. Te contacto muy pronto.</p></div>
+    <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="grid min-h-[380px] place-items-center rounded-card border border-ac bg-tarjeta p-8 text-center">
+      <div><span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-ac-fuerte text-white"><IcoPalomita size={26} /></span><p className="mt-4 font-display text-3xl font-bold">¡Gracias!</p><p className="mt-3 text-suave">Recibí tu mensaje. Te contacto muy pronto.</p></div>
     </motion.div>
   );
   return (
-    <form onSubmit={enviar} className="space-y-3 rounded-[26px] border border-borde bg-tarjeta p-7">
+    <form onSubmit={enviar} className="space-y-3 rounded-card border border-borde bg-tarjeta p-7">
       <div className="grid gap-3 sm:grid-cols-2">
         <input className={campo} placeholder="Tu nombre" value={f.nombre} onChange={(e) => setF({ ...f, nombre: e.target.value })} required />
         <input className={campo} placeholder="Tu negocio (opcional)" value={f.negocio} onChange={(e) => setF({ ...f, negocio: e.target.value })} />
@@ -143,13 +141,13 @@ function FormCotizacion() {
       <div className="flex flex-wrap gap-2">
         {["Página web", "Tienda o catálogo", "Sistema a la medida", "Mantenimiento", "No sé todavía"].map((s) => (
           <button type="button" key={s} onClick={() => setF({ ...f, servicio: s })}
-            className={`rounded-full border px-4 py-2 text-sm transition ${f.servicio === s ? "border-ac bg-ac-fuerte text-white" : "border-borde text-suave hover:text-tx"}`}>{s}</button>
+            aria-pressed={f.servicio === s} className={`rounded-full border px-4 py-2 text-sm transition active:scale-95 ${f.servicio === s ? "border-ac bg-ac-fuerte text-white" : "border-borde text-suave hover:text-tx"}`}>{s}</button>
         ))}
       </div>
       <input className={campo} placeholder="Tu WhatsApp o correo" value={f.contacto} onChange={(e) => setF({ ...f, contacto: e.target.value })} required />
       <textarea className={`${campo} min-h-[120px] resize-none`} placeholder="Cuéntame un poco de tu idea" value={f.mensaje} onChange={(e) => setF({ ...f, mensaje: e.target.value })} required />
       <input className="hidden" tabIndex={-1} autoComplete="off" value={f._honey} onChange={(e) => setF({ ...f, _honey: e.target.value })} aria-hidden />
-      <button disabled={estado === "enviando"} className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ac-fuerte py-4 font-mono text-sm font-semibold text-white disabled:opacity-60">{estado === "enviando" ? "Enviando…" : "Pedir cotización gratis"} <IcoEnviar className="transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></button>
+      <button disabled={estado === "enviando"} className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ac-fuerte py-4 text-[15px] font-semibold text-white transition hover:brightness-110 active:scale-[0.98] disabled:opacity-70">{estado === "enviando" ? <><span className="cargando" aria-hidden />Enviando…</> : <>Pedir cotización gratis <IcoEnviar className="transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></>}</button>
       {estado === "error" && <p className="text-sm text-red-400">No se pudo enviar. Escríbeme por WhatsApp o a {PERFIL.correo}.</p>}
     </form>
   );
@@ -160,54 +158,51 @@ export default function Servicios() {
   return (
     <>
       {/* Inicio: mensaje a la izquierda, vitrina de sitios reales a la derecha */}
-      <section className="relative overflow-hidden pt-32 md:pt-40">
-        <div aria-hidden className="rejilla absolute inset-0 [mask-image:radial-gradient(ellipse_at_30%_0%,black,transparent_70%)]" />
+      <section className="relative pt-32 md:pt-40">
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 md:px-10 lg:grid-cols-[1.05fr_1fr]">
-          <div>
+          <div className="min-w-0">
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="lab">Desarrollo web y sistemas · Misantla y todo México</motion.p>
             <h1 className="mt-6 font-display text-[clamp(2.2rem,4.4vw,3.8rem)] font-extrabold leading-[0.98] tracking-[-0.045em]">
               <TextoDividido texto="Páginas, tiendas y sistemas" delay={0.1} />
-              <span className="block font-serif text-[1.08em] font-normal italic tracking-[-0.03em] text-ac"><TextoDividido texto="que trabajan por tu negocio." delay={0.4} /></span>
+              <span className="block text-ac"><TextoDividido texto="que trabajan por tu negocio." delay={0.4} /></span>
             </h1>
             <motion.p initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }} className="mt-7 max-w-xl text-lg leading-relaxed text-suave md:text-xl">
               Desde la primera plática hasta que está publicado y tus clientes lo usan. Trato directo conmigo, sin intermediarios.
             </motion.p>
             <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1 }} className="mt-9 flex flex-wrap gap-3">
-              <Magnetico><a href={WA} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-[#25d366] px-6 py-4 font-mono text-sm font-semibold text-[#062b14] shadow-[0_10px_40px_-12px_#25d366]">Escríbeme por WhatsApp</a></Magnetico>
-              <Magnetico><a href="#contacto" className="inline-flex items-center gap-2 rounded-xl border border-borde px-6 py-4 font-mono text-sm font-semibold text-tx hover:border-ac">Cotiza gratis →</a></Magnetico>
+              <a href={WA} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2.5 rounded-xl bg-[#25d366] px-7 py-4 text-base font-semibold text-[#062b14] transition hover:brightness-105 active:scale-[0.97]"><IcoWhatsApp size={20} />Escríbeme por WhatsApp</a>
+              <a href="#contacto" className="group inline-flex items-center gap-2 py-2 text-[15px] font-semibold text-tx underline decoration-borde underline-offset-[6px] transition hover:decoration-ac">Cotiza gratis <IcoFlecha size={16} className="transition group-hover:translate-x-1" /></a>
             </motion.div>
           </div>
-          <motion.div initial={{ opacity: 0, y: 30, rotate: 2 }} animate={{ opacity: 1, y: 0, rotate: 0 }} transition={{ delay: 0.5, duration: 1, ease }}>
+          <motion.div className="min-w-0" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.8, ease }}>
             <Vitrina />
           </motion.div>
         </div>
         <div className="relative mx-auto mt-20 grid max-w-7xl grid-cols-2 gap-6 border-t border-linea px-5 pt-8 md:grid-cols-4 md:px-10">
           {[["4", "negocios atendidos"], ["2023", "trabajando con clientes"], ["100%", "adaptable a celular"], ["1 a 1", "trato directo conmigo"]].map(([v, l], i) => (
-            <Revelar key={l} delay={i * 0.06}><p className="font-serif text-4xl">{v}</p><p className="mt-1 text-sm text-suave">{l}</p></Revelar>
+            <Revelar key={l} delay={i * 0.06}><p className="num font-display text-3xl font-bold tracking-[-0.03em]">{v}</p><p className="mt-1 text-sm text-suave">{l}</p></Revelar>
           ))}
         </div>
       </section>
 
       {/* Servicios: 4 tarjetas con la misma estructura */}
       <section id="servicios" className="mx-auto max-w-7xl scroll-mt-20 px-5 py-28 md:px-10">
-        <Encabezado n="01 · Servicios" titulo="Lo que puedo hacer por tu negocio" />
+        <Encabezado titulo="Lo que puedo hacer por tu negocio" />
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {SERVICIOS.map((s, i) => (
             <Revelar key={s.n} delay={i * 0.08} className="h-full">
-              <div className="group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-borde bg-tarjeta p-7 transition duration-300 hover:-translate-y-1 hover:border-ac">
-                <div aria-hidden className="absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-0 blur-3xl transition duration-500 group-hover:opacity-100" style={{ background: "var(--brillo)" }} />
+              <div className="group relative flex h-full flex-col overflow-hidden rounded-card border border-borde bg-tarjeta p-7 transition duration-300 hover:-translate-y-1 hover:border-ac">
                 <div className="relative flex items-center justify-between">
                   <span className="grid h-12 w-12 place-items-center rounded-2xl bg-chip text-ac transition group-hover:bg-ac-fuerte group-hover:text-white">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{ICONOS[s.i]}</svg>
                   </span>
-                  <span className="font-mono text-xs text-tenue">{s.n}</span>
                 </div>
                 <h3 className="relative mt-6 flex min-h-[4rem] items-end font-display text-2xl font-bold leading-tight tracking-[-0.03em]">{s.t}</h3>
                 <p className="relative mt-2 min-h-[4.6rem] text-suave">{s.d}</p>
                 <ul className="relative mt-5 space-y-2 border-t border-linea pt-5">
-                  {s.inc.map((x) => <li key={x} className="flex gap-2 text-sm"><span className="text-ac">✓</span>{x}</li>)}
+                  {s.inc.map((x) => <li key={x} className="flex gap-2 text-sm"><IcoPalomita size={16} className="mt-0.5 text-ac" />{x}</li>)}
                 </ul>
-                <p className="relative mt-auto pt-6 font-mono text-[11px] leading-relaxed text-tenue"><span className="text-ac">IDEAL PARA ·</span> {s.ideal}</p>
+                <p className="relative mt-auto pt-6 text-sm leading-relaxed text-tenue"><span className="font-semibold text-ac">Ideal para:</span> {s.ideal}</p>
               </div>
             </Revelar>
           ))}
@@ -216,21 +211,21 @@ export default function Servicios() {
 
       {/* Trabajos: cuadrícula tranquila; la imagen se desliza hacia abajo al pasar el mouse */}
       <section id="trabajos" className="mx-auto max-w-7xl scroll-mt-20 px-5 py-20 md:px-10">
-        <Encabezado n="02 · Trabajos" titulo="Negocios que ya están en línea" />
+        <Encabezado titulo="Negocios que ya están en línea" />
         <div className="grid gap-6 md:grid-cols-2">
           {TRABAJOS.map((w, i) => (
             <Revelar key={w.n} delay={(i % 2) * 0.1}>
-              <a href={w.url} target={w.url ? "_blank" : undefined} rel="noreferrer" className="group block overflow-hidden rounded-[22px] border border-borde bg-tarjeta transition hover:border-ac">
+              <a href={w.url} target={w.url ? "_blank" : undefined} rel="noreferrer" className="group block overflow-hidden rounded-card border border-borde bg-tarjeta transition hover:border-ac">
                 <div className="relative aspect-[16/10] overflow-hidden bg-bg2">
                   <img src={w.img} alt={w.n} loading="lazy" className="absolute inset-0 h-full w-full object-cover object-top transition-[object-position,transform] duration-[2500ms] ease-out group-hover:scale-[1.03] group-hover:object-bottom" />
                 </div>
                 <div className="flex items-end justify-between gap-4 p-6">
                   <div>
-                    <p className="font-mono text-xs text-ac">{w.g}</p>
+                    <p className="lab">{w.g}</p>
                     <h3 className="mt-1 font-display text-2xl font-bold">{w.n}</h3>
                     <p className="mt-2 text-suave">{w.d}</p>
                   </div>
-                  {w.url && <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-borde text-ac transition group-hover:bg-ac-fuerte group-hover:text-white">↗</span>}
+                  {w.url && <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-borde text-ac transition group-hover:bg-ac-fuerte group-hover:text-white"><IcoExterno size={16} /></span>}
                 </div>
               </a>
             </Revelar>
@@ -240,12 +235,12 @@ export default function Servicios() {
 
       {/* Proceso */}
       <section id="proceso" className="mx-auto max-w-7xl scroll-mt-20 px-5 py-28 md:px-10">
-        <Encabezado n="03 · Proceso" titulo="Así trabajamos" sub="Cuatro pasos claros. Siempre sabes en qué va tu proyecto." />
+        <Encabezado titulo="Así trabajamos" sub="Cuatro pasos claros. Siempre sabes en qué va tu proyecto." />
         <div className="grid gap-5 md:grid-cols-4">
           {PASOS.map((p, i) => (
             <Revelar key={p.t} delay={i * 0.12}>
-              <div className="relative h-full rounded-[22px] border border-borde bg-tarjeta p-6">
-                <span className="font-serif text-6xl italic text-ac/30">{i + 1}</span>
+              <div className="relative h-full rounded-card border border-borde bg-tarjeta p-6">
+                <span className="num font-display text-4xl font-bold text-ac">{i + 1}</span>
                 <h3 className="mt-2 font-display text-xl font-bold">{p.t}</h3>
                 <p className="mt-2 text-suave">{p.d}</p>
               </div>
@@ -257,16 +252,16 @@ export default function Servicios() {
       {/* Por qué conmigo */}
       <section className="border-y border-linea bg-bg2/50 py-24">
         <div className="mx-auto max-w-7xl px-5 md:px-10">
-          <Revelar><h2 className="font-display text-4xl font-bold tracking-[-0.03em] md:text-5xl">¿Por qué <span className="font-serif font-normal italic text-ac">conmigo</span>?</h2></Revelar>
+          <Revelar><h2 className="font-display text-4xl font-bold tracking-[-0.03em] md:text-5xl">¿Por qué <span className="text-ac">conmigo</span>?</h2></Revelar>
           <div className="mt-12 grid gap-5 md:grid-cols-2">
             {RAZONES.map((r, i) => (
               <Revelar key={r.t} delay={i * 0.08}>
-                <div className="flex h-full gap-5 rounded-[22px] border border-borde bg-tarjeta p-6">
-                  <span className="font-serif text-4xl italic text-ac">0{i + 1}</span>
+                <div className="flex h-full gap-5 rounded-card border border-borde bg-tarjeta p-6">
+                  <span className="num font-display text-2xl font-bold text-ac">{i + 1}</span>
                   <div>
                     <p className="font-display text-xl font-bold">{r.t}</p>
                     <p className="mt-2 text-suave">{r.d}</p>
-                    <p className="mt-3 inline-flex rounded-full bg-chip px-3 py-1 font-mono text-[11px] text-ac">{r.p}</p>
+                    <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-ac"><IcoPalomita size={15} />{r.p}</p>
                   </div>
                 </div>
               </Revelar>
@@ -279,8 +274,7 @@ export default function Servicios() {
       <section id="preguntas" className="mx-auto max-w-7xl scroll-mt-20 px-5 py-28 md:px-10">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.5fr]">
           <Revelar>
-            <p className="lab">04 · Preguntas</p>
-            <h2 className="mt-4 font-display text-4xl font-bold tracking-[-0.03em] md:text-5xl">Lo que más me preguntan</h2>
+            <h2 className="font-display text-4xl font-bold tracking-[-0.03em] md:text-5xl">Lo que más me preguntan</h2>
             <p className="mt-4 text-suave">¿Tienes otra duda? <a href={WA} target="_blank" rel="noreferrer" className="text-ac underline-offset-4 hover:underline">Pregúntame por WhatsApp</a>.</p>
           </Revelar>
           <div className="space-y-3">{PREGUNTAS.map((q, i) => <Revelar key={q.p} delay={i * 0.04}><Pregunta {...q} i={i} /></Revelar>)}</div>
@@ -288,39 +282,35 @@ export default function Servicios() {
       </section>
 
       {/* Contacto */}
-      <section id="contacto" className="relative scroll-mt-20 overflow-hidden py-28">
-        <div aria-hidden className="rejilla absolute inset-0 [mask-image:radial-gradient(ellipse_at_50%_20%,black,transparent_65%)]" />
+      <section id="contacto" className="relative scroll-mt-20 py-28">
         <div className="relative mx-auto max-w-7xl px-5 md:px-10">
           <Revelar>
-            <p className="lab">05 · Contacto</p>
-            <h2 className="mt-4 font-display text-[clamp(2.6rem,8vw,6.5rem)] font-extrabold leading-[0.92] tracking-[-0.05em]">Cuéntame tu <span className="font-serif font-normal italic text-ac">idea</span>.</h2>
+            <h2 className="font-display text-[clamp(2.6rem,8vw,6.5rem)] font-extrabold leading-[0.92] tracking-[-0.05em]">Cuéntame tu <span className="text-ac">idea</span>.</h2>
             <p className="mt-6 max-w-xl text-xl text-suave">La cotización es gratis y sin compromiso. Te respondo lo antes posible.</p>
           </Revelar>
-          <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_1.2fr]">
-            <div className="space-y-4">
+          <div className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_1.2fr] [&>*]:min-w-0">
+            <div className="min-w-0 space-y-4">
               {/* WhatsApp: tarjeta verde con vista previa del mensaje */}
               <Revelar>
-                <a href={WA} target="_blank" rel="noreferrer" className="group relative block overflow-hidden rounded-[26px] p-7 text-white transition duration-300 hover:-translate-y-1"
-                  style={{ background: "linear-gradient(140deg, #128c4a, #25d366 70%)" }}>
-                  <span aria-hidden className="absolute -right-10 -top-10 opacity-20 transition duration-500 group-hover:rotate-12 group-hover:scale-110"><IcoWhatsApp size={180} /></span>
+                <a href={WA} target="_blank" rel="noreferrer" className="group relative block overflow-hidden rounded-card bg-[#128c4a] p-7 text-white transition duration-300 hover:-translate-y-1">
                   <span className="relative flex items-center gap-3">
                     <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/20 backdrop-blur"><IcoWhatsApp size={26} /></span>
                     <span><span className="block font-display text-xl font-bold">WhatsApp</span><span className="block text-sm text-white/80">La forma más rápida de platicar</span></span>
                   </span>
                   <span className="relative mt-6 block max-w-[85%] rounded-2xl rounded-bl-md bg-white px-4 py-3 text-[15px] text-[#0b3d22] shadow-lg">
                     ¡Hola Jose Juan! Vi tu página y me gustaría cotizar un proyecto.
-                    <span className="mt-1 block text-right font-mono text-[10px] text-[#5b8a6e]">✓✓</span>
+                    <span className="mt-1 block text-right text-[11px] text-[#5b8a6e]">✓✓</span>
                   </span>
-                  <span className="relative mt-6 inline-flex items-center gap-2 rounded-full bg-[#062b14] px-5 py-2.5 font-mono text-sm font-semibold">Abrir chat <span className="transition group-hover:translate-x-1">→</span></span>
+                  <span className="relative mt-6 inline-flex items-center gap-2 rounded-full bg-[#062b14] px-5 py-2.5 text-sm font-semibold">Abrir chat <IcoFlecha size={15} className="transition group-hover:translate-x-1" /></span>
                 </a>
               </Revelar>
               {/* Correo */}
               <Revelar delay={0.08}>
-                <div className="flex items-center gap-4 rounded-[22px] border border-borde bg-tarjeta p-5">
+                <div className="flex min-w-0 items-center gap-4 rounded-card border border-borde bg-tarjeta p-5">
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-ac-fuerte text-white"><IcoCorreo size={24} /></span>
                   <a href={`mailto:${PERFIL.correo}`} className="min-w-0 flex-1">
                     <span className="block font-display font-bold">Correo</span>
-                    <span className="block truncate font-mono text-xs text-suave hover:text-ac">{PERFIL.correo}</span>
+                    <span className="block truncate text-sm text-suave hover:text-ac">{PERFIL.correo}</span>
                   </a>
                   <CopiarCorreo />
                 </div>
@@ -333,7 +323,7 @@ export default function Servicios() {
 
       {/* WhatsApp flotante */}
       <motion.a href={WA} target="_blank" rel="noreferrer" aria-label="Escríbeme por WhatsApp" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1.5, type: "spring" }}
-        className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25d366] shadow-[0_10px_30px_-6px_#25d366]">
+        className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25d366] shadow-lg">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="#062b14" aria-hidden><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .3-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.4.3.2.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z" /></svg>
       </motion.a>
     </>

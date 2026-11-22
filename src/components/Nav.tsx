@@ -1,20 +1,48 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
+import { flushSync } from "react-dom";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { TEXTOS } from "../data/contenido";
 import { useEstado, useT } from "../lib/estado";
 
+/** Marca "Z." — la Z de la terminal de ZeroFuann con el punto morado de su nombre. */
+export function Marca({ size = 28 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden className="shrink-0">
+      <rect width="64" height="64" rx="15" fill="#0b0a10" />
+      <path d="M15 15h24.5a5.5 5.5 0 0 1 4.4 8.8L27.5 41H44v8H15v-5.5L32.7 23H15z" fill="#f1eff8" />
+      <circle cx="51.5" cy="45" r="4.5" fill="#a78bfa" />
+    </svg>
+  );
+}
+
 export function Logo() {
   return (
-    <a href="/" className="font-mono text-[15px] font-semibold tracking-tight text-tx">
-      ZeroFuann<span className="text-ac">.</span>
+    <a href="/" className="group inline-flex items-center gap-2.5 font-display text-[15px] font-bold tracking-[-0.02em] text-tx" aria-label="ZeroFuann, inicio">
+      <span className="transition group-hover:-rotate-6"><Marca /></span>
+      <span>ZeroFuann<span className="text-ac">.</span></span>
     </a>
   );
 }
 
 export function BotonTema() {
   const { tema, alternarTema } = useEstado();
+  /** El tema nuevo se revela en un círculo que crece desde el botón (si el navegador lo permite). */
+  const cambiar = (e: MouseEvent<HTMLButtonElement>) => {
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void> } };
+    if (!doc.startViewTransition || matchMedia("(prefers-reduced-motion: reduce)").matches) return alternarTema();
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const radio = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    const vt = doc.startViewTransition(() => flushSync(alternarTema));
+    vt.ready.then(() => {
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radio}px at ${x}px ${y}px)`] },
+        { duration: 550, easing: "cubic-bezier(.22,1,.36,1)", pseudoElement: "::view-transition-new(root)" },
+      );
+    });
+  };
   return (
-    <button onClick={alternarTema} aria-label={tema === "oscuro" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+    <button onClick={cambiar} aria-label={tema === "oscuro" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
       className="grid h-9 w-9 place-items-center overflow-hidden rounded-full border border-borde text-suave transition hover:text-tx">
       <AnimatePresence mode="wait" initial={false}>
         <motion.span key={tema} initial={{ y: -14, opacity: 0, rotate: -90 }} animate={{ y: 0, opacity: 1, rotate: 0 }} exit={{ y: 14, opacity: 0, rotate: 90 }} transition={{ duration: 0.25 }}>
@@ -53,15 +81,15 @@ export default function Nav({ servicios = false }: { servicios?: boolean }) {
       <nav className="mx-auto flex h-[68px] max-w-7xl items-center justify-between px-5 md:px-10">
         <div className="flex items-center gap-3">
           <Logo />
-          {servicios && <span className="hidden font-mono text-xs text-tenue sm:inline">/ servicios</span>}
+          {servicios && <span className="hidden text-sm text-tenue sm:inline">/ servicios</span>}
         </div>
-        <ul className="hidden items-center gap-8 font-mono text-[13px] text-suave md:flex">
+        <ul className="hidden items-center gap-8 text-sm font-medium text-suave md:flex">
           {links.map(([h, l]) => <li key={h}><a href={h} className="transition hover:text-tx">{l}</a></li>)}
-          {servicios && <li><a href="/" className="text-ac hover:underline">← Portafolio</a></li>}
+          {servicios && <li><a href="/" className="text-ac hover:underline">Portafolio</a></li>}
         </ul>
         <div className="flex items-center gap-2">
           {!servicios && (
-            <button onClick={() => setIdioma(idioma === "es" ? "en" : "es")} className="h-9 rounded-full border border-borde px-3 font-mono text-xs text-suave transition hover:text-tx" aria-label="Cambiar idioma">
+            <button onClick={() => setIdioma(idioma === "es" ? "en" : "es")} className="h-9 rounded-full border border-borde px-3 text-xs font-semibold text-suave transition hover:text-tx" aria-label="Cambiar idioma">
               <span className={idioma === "es" ? "text-tx" : ""}>ES</span> / <span className={idioma === "en" ? "text-tx" : ""}>EN</span>
             </button>
           )}
@@ -79,7 +107,7 @@ export default function Nav({ servicios = false }: { servicios?: boolean }) {
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
             className="fixed inset-x-0 top-[68px] bottom-0 bg-bg px-6 pt-8 md:hidden">
             <ul className="space-y-6">
-              {[...links, ...(servicios ? [["/", "← Portafolio"]] : [])].map(([h, l], i) => (
+              {[...links, ...(servicios ? [["/", "Portafolio"]] : [])].map(([h, l], i) => (
                 <motion.li key={h} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}>
                   <a href={h} onClick={() => setMenu(false)} className="font-display text-3xl font-bold">{l}</a>
                 </motion.li>

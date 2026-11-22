@@ -9,11 +9,11 @@ import Hero from "./components/Hero";
 import { Numeros, Proyectos, SobreMi } from "./components/Secciones";
 import Stack from "./components/Stack";
 import { ConIA, Contacto, Experiencia, LibroVisitas, Pie } from "./components/Final";
-import { BrilloCursor } from "./components/efectos";
-import Servicios from "./pages/Servicios";
 
 // El panel solo se descarga si alguien entra a /admin
 const Admin = lazy(() => import("./pages/Admin"));
+// Servicios también va aparte: el inicio no la necesita
+const Servicios = lazy(() => import("./pages/Servicios"));
 
 function DesplazamientoSuave() {
   useEffect(() => {
@@ -45,11 +45,10 @@ function App() {
     <Proveedor>
       <DesplazamientoSuave />
       <Progreso />
-      <BrilloCursor />
-      <div className="ruido relative z-10">
+      <div className="relative">
         <Nav servicios={esServicios} />
         <main>
-          {esServicios ? <Servicios /> : (
+          {esServicios ? <Suspense fallback={<div className="min-h-screen" />}><Servicios /></Suspense> : (
             <>
               <Hero />
               <Numeros />
