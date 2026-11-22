@@ -6,17 +6,20 @@
   <meta name="robots" content="noindex" />
   <title>Página no encontrada · ZeroFuann</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="/fuentes/unbounded.woff2" as="font" type="font/woff2" crossorigin />
   <style>
+    @font-face { font-family: "Unbounded"; src: url("/fuentes/unbounded.woff2") format("woff2"); font-weight: 200 900; font-display: swap; }
+    @font-face { font-family: "Instrument Sans"; src: url("/fuentes/instrument-sans.woff2") format("woff2"); font-weight: 400 700; font-display: swap; }
     :root { color-scheme: dark; --bg: #0b0a10; --tx: #f1eff8; --suave: #b1acc4; --ac: #a78bfa; --ac-fuerte: #8b5cf6; }
     @media (prefers-color-scheme: light) { :root { color-scheme: light; --bg: #f5f2ec; --tx: #16131c; --suave: #4a4354; --ac: #6d28d9; --ac-fuerte: #6d28d9; } }
     * { box-sizing: border-box; margin: 0; }
     body { min-height: 100dvh; display: grid; place-items: center; padding: 24px; background: var(--bg); color: var(--tx);
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center; }
+      font-family: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center; }
     main { max-width: 440px; }
     svg { width: 64px; height: 64px; }
-    .num { margin-top: 28px; font-size: 64px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+    .num { margin-top: 28px; font-family: "Unbounded", system-ui, sans-serif; font-size: 72px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--tx); }
     .num span { color: var(--ac); }
-    h1 { margin-top: 16px; font-size: 22px; }
+    h1 { margin-top: 18px; font-family: "Unbounded", system-ui, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
     p { margin-top: 10px; color: var(--suave); line-height: 1.6; }
     a { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; padding: 14px 24px; border-radius: 12px;
       background: var(--ac-fuerte); color: #fff; font-weight: 600; text-decoration: none; transition: filter .2s, transform .1s; }
