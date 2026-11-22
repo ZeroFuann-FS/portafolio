@@ -6,6 +6,7 @@ import "./index.css";
 import { Proveedor } from "./lib/estado";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
+import Intro, { debeMostrarIntro, useIntroLista } from "./components/Intro";
 import { Numeros, Proyectos, SobreMi } from "./components/Secciones";
 import Stack from "./components/Stack";
 import { ConIA, Contacto, Experiencia, LibroVisitas, Pie } from "./components/Final";
@@ -34,7 +35,12 @@ function Progreso() {
   return <motion.div aria-hidden className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-ac" style={{ scaleX: x }} />;
 }
 
+// Se decide antes del primer pintado para que no se vea la página un instante antes de la intro
+const CON_INTRO = debeMostrarIntro();
+if (CON_INTRO) document.documentElement.setAttribute("data-intro", "");
+
 function App() {
+  const introLista = useIntroLista();
   const esServicios = location.pathname.startsWith("/servicios");
   if (location.pathname.startsWith("/admin")) return (
     <Proveedor>
@@ -45,12 +51,13 @@ function App() {
     <Proveedor>
       <DesplazamientoSuave />
       <Progreso />
+      {!esServicios && <Intro inicial={CON_INTRO} />}
       <div className="relative">
         <Nav servicios={esServicios} />
         <main>
           {esServicios ? <Suspense fallback={<div className="min-h-screen" />}><Servicios /></Suspense> : (
             <>
-              <Hero />
+              {introLista ? <Hero /> : <div className="min-h-[100svh]" />}
               <Numeros />
               <SobreMi />
               <Proyectos />

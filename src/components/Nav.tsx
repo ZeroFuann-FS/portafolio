@@ -2,6 +2,7 @@ import { useEffect, useState, type MouseEvent } from "react";
 import { flushSync } from "react-dom";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { TEXTOS } from "../data/contenido";
+import { repetirIntro } from "./Intro";
 import { useEstado, useT } from "../lib/estado";
 
 /** Marca "Z." — la Z de la terminal de ZeroFuann con el punto morado de su nombre. */
@@ -17,8 +18,12 @@ export function Marca({ size = 28 }: { size?: number }) {
 
 export function Logo() {
   return (
-    <a href="/" className="group inline-flex items-center gap-2.5 font-display text-[15px] font-bold tracking-[-0.02em] text-tx" aria-label="ZeroFuann, inicio">
-      <span className="transition group-hover:-rotate-6"><Marca /></span>
+    <a href="/" className="group inline-flex items-center gap-2.5 font-display text-[15px] font-bold tracking-[-0.02em] text-tx" aria-label="ZeroFuann, inicio"
+      onClick={(e) => {
+        // En el inicio, el logo repite su animación (si el usuario no pidió reducir movimiento)
+        if (location.pathname === "/" && !matchMedia("(prefers-reduced-motion: reduce)").matches) { e.preventDefault(); repetirIntro(); }
+      }}>
+      <span data-marca className="transition group-hover:-rotate-6"><Marca /></span>
       <span>ZeroFuann<span className="text-ac">.</span></span>
     </a>
   );

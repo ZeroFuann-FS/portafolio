@@ -53,6 +53,9 @@ p { text-wrap: pretty; }
 @keyframes girar-carga { to { transform: rotate(360deg); } }
 .cargando { width: 1em; height: 1em; border-radius: 9999px; border: 2px solid currentColor; border-right-color: transparent; animation: girar-carga .7s linear infinite; }
 
+/* Mientras corre la intro, la marca del menú espera a que llegue la que vuela */
+[data-intro] [data-marca] { opacity: 0; }
+
 /* Cambio de tema: se revela en círculo desde el botón (View Transitions) */
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 
