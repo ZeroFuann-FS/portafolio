@@ -52,7 +52,7 @@ export const TEXTOS = {
   },
   numeros: [
     { valor: 4, sufijo: "", t: { es: "empresas como clientes freelance", en: "companies as freelance clients" } },
-    { valor: 2023, sufijo: "", t: { es: "trabajando con clientes reales", en: "working with real clients" }, sinAnimar: true },
+    { valor: 2024, sufijo: "", t: { es: "trabajando con clientes reales", en: "working with real clients" }, sinAnimar: true },
     { valor: 6, sufijo: "+", t: { es: "proyectos publicados en línea", en: "projects live online" } },
     { valor: 5, sufijo: "", t: { es: "certificaciones (Pega, Anthropic, Huawei)", en: "certifications (Pega, Anthropic, Huawei)" } },
   ],
@@ -65,8 +65,8 @@ export const TEXTOS = {
         en: "I study Information and Communication Technologies Engineering at the Instituto Tecnológico Superior de Misantla and I'm doing my professional residency as a Software Engineering Resident at Synesia Labs.",
       },
       {
-        es: "Desde 2023 hago sitios para empresas reales: me siento con el cliente, entiendo cómo trabaja y entrego algo que su gente usa. Esa es la parte que más disfruto, y por eso quiero crecer como Forward Deployed Engineer.",
-        en: "Since 2023 I've built websites for real businesses: I sit down with the client, understand how they work and deliver something their people actually use. That's the part I enjoy the most, and why I want to grow as a Forward Deployed Engineer.",
+        es: "Desde 2024 hago sitios para empresas reales: me siento con el cliente, entiendo cómo trabaja y entrego algo que su gente usa. Esa es la parte que más disfruto, y por eso quiero crecer como Forward Deployed Engineer.",
+        en: "Since 2024 I've built websites for real businesses: I sit down with the client, understand how they work and deliver something their people actually use. That's the part I enjoy the most, and why I want to grow as a Forward Deployed Engineer.",
       },
       {
         es: "Fuera del código: gym, finanzas personales y aprender algo nuevo cada semana.",
@@ -78,7 +78,7 @@ export const TEXTOS = {
   linea: [
     { fecha: "2022", tipo: "trabajo", tag: { es: "Primer trabajo", en: "First job" }, titulo: { es: "Servicio social", en: "Social service" }, t: { es: "Bases de datos de expedientes en la Jurisdicción Sanitaria IV.", en: "Record databases at Jurisdicción Sanitaria IV." } },
     { fecha: "2022", tipo: "escuela", tag: { es: "Escuela", en: "School" }, titulo: { es: "Ingeniería en TICs", en: "ICT Engineering" }, t: { es: "Entro al Instituto Tecnológico Superior de Misantla.", en: "I start at Instituto Tecnológico Superior de Misantla." } },
-    { fecha: "2023", tipo: "trabajo", tag: { es: "Clientes", en: "Clients" }, titulo: { es: "Primer cliente freelance", en: "First freelance client" }, t: { es: "Empiezo a hacer sitios para empresas reales.", en: "I start building sites for real businesses." } },
+    { fecha: "2024", tipo: "trabajo", tag: { es: "Clientes", en: "Clients" }, titulo: { es: "Primer cliente freelance", en: "First freelance client" }, t: { es: "Grupo MANBAL me busca para su sitio; lo entrego en 2025.", en: "Grupo MANBAL hires me for its site; delivered in 2025." } },
     { fecha: "2025", tipo: "proyecto", tag: { es: "IA y negocio", en: "AI & business" }, titulo: { es: "SystCo IA · Pega", en: "SystCo AI · Pega" }, t: { es: "Visión por computadora y Certified Pega Business Architect.", en: "Computer vision and Certified Pega Business Architect." } },
     { fecha: "2026", tipo: "proyecto", tag: { es: "Producto", en: "Product" }, titulo: { es: "Synesia Labs · Brío", en: "Synesia Labs · Brío" }, t: { es: "Residencia, certificaciones de Anthropic y lanzo Brío.", en: "Residency, Anthropic certifications and I launch Brío." } },
     { fecha: "→", tipo: "meta", tag: { es: "Siguiente", en: "Next" }, titulo: { es: "Forward Deployed Engineer", en: "Forward Deployed Engineer" }, t: { es: "Cerca del cliente, de la idea a producción.", en: "Close to the client, from idea to production." }, meta: true },
@@ -305,7 +305,7 @@ export const STACK: Tecnologia[] = [
   // Metodologías y negocio
   { id: "scrum", n: "Scrum", simbolo: "scrum", cat: "metodo", nivel: 2, uso: { es: "Trabajo por sprints en proyectos en equipo", en: "Sprint-based work in team projects" } },
   { id: "pega", n: "Pega (visión de negocio)", simbolo: "negocio", cat: "metodo", nivel: 2, uso: { es: "Certified Pega Business Architect: alinear el software con el negocio", en: "Certified Pega Business Architect: aligning software with the business" } },
-  { id: "clientes", n: "Trato con clientes", simbolo: "clientes", cat: "metodo", nivel: 0, uso: { es: "Levantar requerimientos y entregar de punta a punta desde 2023", en: "Gathering requirements and delivering end to end since 2023" } },
+  { id: "clientes", n: "Trato con clientes", simbolo: "clientes", cat: "metodo", nivel: 0, uso: { es: "Levantar requerimientos y entregar de punta a punta desde 2024", en: "Gathering requirements and delivering end to end since 2024" } },
 ];
 
 export const EXPERIENCIA = [
@@ -322,7 +322,7 @@ export const EXPERIENCIA = [
   },
   {
     puesto: { es: "Desarrollador web freelance", en: "Freelance web developer" }, lugar: { es: "Autónomo", en: "Self-employed" },
-    fecha: { es: "Oct 2023 – Actual", en: "Oct 2023 – Present" },
+    fecha: { es: "2024 – Actual", en: "2024 – Present" },
     d: { es: "Sitios para 4 empresas, de la primera reunión a la publicación: Lupac, Minea, MANBAL y FANA.", en: "Websites for 4 companies, from the first meeting to launch: Lupac, Minea, MANBAL and FANA." },
     puntos: [
       { es: "Levanto requerimientos directamente con cada cliente", en: "I gather requirements directly with each client" },

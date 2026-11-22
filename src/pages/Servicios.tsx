@@ -47,7 +47,7 @@ const PASOS = [
 ];
 
 const RAZONES = [
-  { t: "Hablas directo conmigo", d: "Quien te atiende es quien programa. Sin intermediarios ni mensajes que se pierden.", p: "4 negocios atendidos así desde 2023" },
+  { t: "Hablas directo conmigo", d: "Quien te atiende es quien programa. Sin intermediarios ni mensajes que se pierden.", p: "4 negocios atendidos así desde 2024" },
   { t: "Pensado para el celular", d: "La mayoría de tus clientes te va a ver desde el teléfono, así que diseño primero para ahí.", p: "Todos mis sitios se adaptan a cualquier pantalla" },
   { t: "Que te encuentren", d: "Títulos, descripciones y velocidad cuidados para que Google entienda tu página.", p: "Lupac está en línea con su propio dominio" },
   { t: "No te quedas solo", d: "Te explico cómo hacer cambios sencillos y sigo disponible cuando necesites algo más.", p: "Ajustes después de publicar" },
@@ -180,7 +180,7 @@ export default function Servicios() {
           </motion.div>
         </div>
         <div className="relative mx-auto mt-20 grid max-w-7xl grid-cols-2 gap-6 border-t border-linea px-5 pt-8 md:grid-cols-4 md:px-10">
-          {[["4", "negocios atendidos"], ["2023", "trabajando con clientes"], ["100%", "adaptable a celular"], ["1 a 1", "trato directo conmigo"]].map(([v, l], i) => (
+          {[["4", "negocios atendidos"], ["2024", "trabajando con clientes"], ["100%", "adaptable a celular"], ["1 a 1", "trato directo conmigo"]].map(([v, l], i) => (
             <Revelar key={l} delay={i * 0.06}><p className="num font-display text-3xl font-bold tracking-[-0.03em]">{v}</p><p className="mt-1 text-sm text-suave">{l}</p></Revelar>
           ))}
         </div>
