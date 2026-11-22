@@ -165,6 +165,7 @@ function BloqueProyecto({ p, i }: { p: Proyecto; i: number }) {
         <Revelar>
           <p className="num text-sm text-tenue">{t(p.tipo)}{p.anio && ` · ${p.anio}`}</p>
           <h3 className="mt-3 font-display text-4xl font-bold tracking-[-0.03em] md:text-5xl">{p.nombre}</h3>
+          {p.estado && <p className="mt-2 text-sm text-tenue">{t(p.estado)}</p>}
         </Revelar>
         <Revelar delay={0.08} className="mt-6 space-y-5">
           <div><p className="lab !text-tenue">{t(TEXTOS.proyectos.problema)}</p><p className="mt-1.5 text-suave">{t(p.problema)}</p></div>

@@ -12,8 +12,8 @@ const campo = "w-full rounded-xl border border-borde bg-bg px-4 py-3.5 text-tx o
 /* Sitios reales que van pasando en la ventana del inicio */
 const VITRINA = [
   { tipo: "Catálogo industrial", n: "Lupac Industrial", url: "lu-pac.com", img: "/img/lupac-laptop.webp" },
-  { tipo: "Tienda en línea", n: "Minea Company", url: "minea-company", img: "/img/minea-productos.webp" },
-  { tipo: "Sitio con cotizador", n: "Grupo MANBAL", url: "manbal", img: "/img/manbal-laptop.webp" },
+  { tipo: "Tienda en línea", n: "Minea Company", url: "minea05-company.vercel.app", img: "/img/minea-productos.webp" },
+  { tipo: "Sitio con cotizador", n: "Grupo MANBAL", url: "zerofuann-fs.github.io/manbal", img: "/img/manbal-laptop.webp" },
   { tipo: "Sistema web completo", n: "Brío", url: "mi-brio.vercel.app", img: "/img/brio-laptop-oscuro.webp" },
 ];
 
@@ -31,11 +31,12 @@ const SERVICIOS: { n: string; i: keyof typeof ICONOS; t: string; d: string; inc:
   { n: "04", i: "soporte", t: "Mantenimiento", d: "Tu página al día, sin que tengas que pensar en ella.", inc: ["Cambios de textos y fotos", "Dominio y alojamiento", "Respaldos y seguridad", "Soporte directo conmigo"], ideal: "Quien ya tiene página y quiere olvidarse de ella" },
 ];
 
-const TRABAJOS = [
+/** Trabajos entregados. estado: aclaración honesta cuando el negocio ya cerró (el sitio sigue como muestra). */
+const TRABAJOS: { n: string; g: string; d: string; img: string; url?: string; estado?: string }[] = [
   { n: "Lupac Industrial", g: "Maquinaria industrial", d: "Catálogo por modelos con enfoque en SEO y dominio propio.", img: "/img/lupac-laptop.webp", url: "https://lu-pac.com" },
-  { n: "Minea Company", g: "Dulces artesanales", d: "Tienda en línea con pedidos directos por WhatsApp.", img: "/img/minea-productos.webp" },
-  { n: "Grupo MANBAL", g: "Topografía", d: "Sitio con cotizador en línea de medición de terrenos.", img: "/img/manbal-laptop.webp" },
-  { n: "FANA", g: "Ingeniería vial", d: "Sitio informativo con proyectos y normativas.", img: "/img/fana-laptop.webp" },
+  { n: "Minea Company", g: "Dulces artesanales", d: "Tienda en línea con carrito que arma el pedido para WhatsApp.", img: "/img/minea-productos.webp", url: "https://minea05-company.vercel.app", estado: "El negocio ya cerró; el sitio queda como muestra." },
+  { n: "Grupo MANBAL", g: "Topografía", d: "Sitio con cotizador en línea de medición de terrenos.", img: "/img/manbal-laptop.webp", url: "https://zerofuann-fs.github.io/manbal/", estado: "El negocio ya cerró; el sitio queda como muestra." },
+  { n: "FANA", g: "Ingeniería vial", d: "Sitio informativo con proyectos y normativas.", img: "/img/fana-laptop.webp", url: "https://zerofuann-fs.github.io/fana/", estado: "El negocio ya cerró; el sitio queda como muestra." },
 ];
 
 const PASOS = [
@@ -211,7 +212,7 @@ export default function Servicios() {
 
       {/* Trabajos: cuadrícula tranquila; la imagen se desliza hacia abajo al pasar el mouse */}
       <section id="trabajos" className="mx-auto max-w-7xl scroll-mt-20 px-5 py-20 md:px-10">
-        <Encabezado titulo="Negocios que ya están en línea" />
+        <Encabezado titulo="Trabajos entregados" sub="Sitios que hice para negocios reales. Algunos ya cerraron, pero sus páginas siguen en línea como muestra." />
         <div className="grid gap-6 md:grid-cols-2">
           {TRABAJOS.map((w, i) => (
             <Revelar key={w.n} delay={(i % 2) * 0.1}>
@@ -224,6 +225,7 @@ export default function Servicios() {
                     <p className="lab">{w.g}</p>
                     <h3 className="mt-1 font-display text-2xl font-bold">{w.n}</h3>
                     <p className="mt-2 text-suave">{w.d}</p>
+                    {w.estado && <p className="mt-2 text-sm text-tenue">{w.estado}</p>}
                   </div>
                   {w.url && <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-borde text-ac transition group-hover:bg-ac-fuerte group-hover:text-white"><IcoExterno size={16} /></span>}
                 </div>

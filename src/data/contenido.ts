@@ -155,6 +155,8 @@ export interface Proyecto {
   nombre: string;
   tipo: T;
   anio: string;
+  /** Si el negocio ya cerró u otra aclaración honesta; se muestra bajo el tipo. */
+  estado?: T;
   problema: T;
   solucion: T;
   logros: T[];
@@ -195,14 +197,15 @@ export const PROYECTOS: Proyecto[] = [
       en: "ICT students didn't know which company to choose for their residency or which one matched their interests.",
     },
     solucion: {
-      es: "Un chat de diagnóstico con voz que hace preguntas y recomienda empresas por compatibilidad, en español e inglés.",
-      en: "A voice-enabled diagnostic chat that asks questions and recommends companies by compatibility, in Spanish and English.",
+      es: "Un chat de diagnóstico de cinco preguntas que compara tu perfil con cada empresa y las ordena por compatibilidad, con voz opcional y en español e inglés.",
+      en: "A five-question diagnostic chat that compares your profile with each company and ranks them by match, with optional voice, in Spanish and English.",
     },
     logros: [
-      { es: "Interacción por voz en el navegador", en: "Voice interaction in the browser" },
-      { es: "Bilingüe español / inglés", en: "Bilingual Spanish / English" },
+      { es: "Voz opcional en el navegador: con voz femenina, masculina o solo texto", en: "Optional in-browser voice: female, male or text only" },
+      { es: "Resultados con porcentaje de compatibilidad y ficha en PDF", en: "Results with a match percentage and a PDF summary" },
+      { es: "Bilingüe español / inglés, modo claro y oscuro", en: "Bilingual Spanish / English, light and dark mode" },
     ],
-    tec: ["React", "TypeScript", "Framer Motion"],
+    tec: ["React", "TypeScript", "Framer Motion", "Web Speech API"],
     img: "/img/nexus-laptop.webp", movil: "/img/nexus-celular.webp",
     vivo: "https://nexus-tic.vercel.app", codigo: "https://github.com/ZeroFuann-FS/nexus-tic",
   },
@@ -228,27 +231,28 @@ export const PROYECTOS: Proyecto[] = [
   {
     id: "minea", nombre: "Minea Company", anio: "2026",
     tipo: { es: "Cliente freelance · Tienda en línea", en: "Freelance client · Online store" },
+    estado: { es: "La microempresa ya cerró; el sitio sigue en línea como muestra.", en: "The business has closed; the site stays online as a showcase." },
     problema: {
       es: "Una microempresa de dulces artesanales tomaba pedidos a mano y su catálogo vivía en fotos sueltas.",
       en: "A small artisan candy business took orders by hand and its catalog lived in scattered photos.",
     },
     solucion: {
-      es: "Una tienda en línea con catálogo y pedidos directos por WhatsApp, pensada primero para celular.",
-      en: "An online store with a catalog and direct WhatsApp orders, designed mobile first.",
+      es: "Una tienda en línea con catálogo y un carrito que arma el pedido listo para WhatsApp, pensada primero para celular.",
+      en: "An online store with a catalog and a cart that builds the order ready for WhatsApp, designed mobile first.",
     },
     logros: [
-      { es: "Pedidos por WhatsApp con el producto ya elegido", en: "WhatsApp orders with the product already selected" },
+      { es: "Carrito que arma el pedido con productos, cantidades y total", en: "A cart that builds the order with products, quantities and total" },
       { es: "Catálogo que se consulta desde cualquier lugar", en: "A catalog anyone can browse from anywhere" },
     ],
     tec: ["React", "TypeScript", "Tailwind CSS"],
     img: "/img/minea-laptop.webp", movil: "/img/minea-celular.webp",
-    codigo: "https://github.com/ZeroFuann-FS/minea-company",
+    vivo: "https://minea05-company.vercel.app", codigo: "https://github.com/ZeroFuann-FS/minea-company",
   },
 ];
 
 export const OTROS = [
-  { nombre: "Grupo MANBAL", t: { es: "Despacho topográfico con cotizador de medición de terrenos", en: "Surveying firm with a land measurement quote tool" }, tec: "HTML · CSS · JavaScript", url: "https://github.com/ZeroFuann-FS/manbal", img: "/img/manbal-laptop.webp" },
-  { nombre: "FANA", t: { es: "Sitio informativo de ingeniería vial", en: "Road engineering informational site" }, tec: "HTML · CSS · JavaScript", url: "https://github.com/ZeroFuann-FS/fana", img: "/img/fana-laptop.webp" },
+  { nombre: "Grupo MANBAL", t: { es: "Despacho topográfico con cotizador de medición de terrenos (mi primer cliente; el negocio ya cerró)", en: "Surveying firm with a land measurement quote tool (my first client; the business has closed)" }, tec: "HTML · CSS · JavaScript", url: "https://zerofuann-fs.github.io/manbal/", img: "/img/manbal-laptop.webp" },
+  { nombre: "FANA", t: { es: "Sitio informativo de ingeniería vial (el negocio ya cerró)", en: "Road engineering informational site (the business has closed)" }, tec: "HTML · CSS · JavaScript", url: "https://zerofuann-fs.github.io/fana/", img: "/img/fana-laptop.webp" },
   { nombre: "SystCo IA", t: { es: "Estacionamiento inteligente con visión por computadora (frontend y apoyo con YOLO)", en: "Smart parking with computer vision (frontend and YOLO support)" }, tec: "Vue.js · YOLO", img: "" },
   { nombre: "Plantillas de portafolio", t: { es: "Dos plantillas libres (HTML y React) para que otros armen el suyo", en: "Two free templates (HTML and React) for others to build theirs" }, tec: "HTML · React · MIT", url: "https://github.com/ZeroFuann-FS/plantilla-portafolio-react", img: "" },
 ];
